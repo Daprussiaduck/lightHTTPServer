@@ -37,3 +37,6 @@ lightHTTPServer.code-workspace
 
 # cmake build
 build
+
+# SSL Keys
+*.pem
