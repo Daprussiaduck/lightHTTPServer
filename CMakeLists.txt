@@ -14,7 +14,7 @@ include(FetchContent)
 FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz DOWNLOAD_EXTRACT_TIMESTAMP OLD)
 FetchContent_MakeAvailable(json)
 
-find_package(CURL REQUIRED)
+find_package(OpenSSL REQUIRED)
 
 # Variable for SRC_DIR to reference later
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
@@ -22,11 +22,13 @@ set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 # add Library target
 add_library(${PROJECT_NAME} SHARED 
     ${SRC_DIR}/lightHTTPServer.cpp
-    ${SRC_DIR}/Server/Server.cpp
-    ${SRC_DIR}/Threading/ThreadPool.cpp
+    ${SRC_DIR}/HTTP_Message.cpp
+    ${SRC_DIR}/ThreadPool.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json CURL::libcurl)
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json OpenSSL::SSL OpenSSL::Crypto)
 
 # Tell CMAKE where our includes live
 target_include_directories(${PROJECT_NAME} PUBLIC
