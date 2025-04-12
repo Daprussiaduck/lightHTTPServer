@@ -40,3 +40,6 @@ build
 
 # SSL Keys
 *.pem
+
+# public testing directory
+public
