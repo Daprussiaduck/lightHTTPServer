@@ -20,7 +20,7 @@ namespace lightHTTPServer {
         std::cout << "Deleted Server" << std::endl;
     }
 
-    void Server::addEndpoint(int method, std::string uri, const std::function<nlohmann::json()> &endpointTask){
+    void Server::addEndpoint(int method, std::string uri, const std::function<nlohmann::json(nlohmann::json)> &endpointTask){
         this -> endpoints[endpoint(method, uri)] = endpointTask;
     }
 
@@ -94,7 +94,7 @@ namespace lightHTTPServer {
                         SSL_write(ssl, buffer, (respStr.length() + resp.getBodyLength()));
                     } else if ((this -> endpoints).contains(std::make_pair(mess.getMethod(), mess.getURI()))){
                         std::cout << "GET Endpoint exists" << std::endl;
-                        nlohmann::json retJSON = (this -> endpoints)[std::make_pair(mess.getMethod(), mess.getURI())]();
+                        nlohmann::json retJSON = (this -> endpoints)[std::make_pair(mess.getMethod(), mess.getURI())](mess.getQueryParameters());
                         resp.setStatusCode(HTTP_RESPONSE_CODES::HTTP_STATUS_OK);
                         resp.setBody(retJSON);
                         std::string respStr = resp.toString();
@@ -121,7 +121,7 @@ namespace lightHTTPServer {
                     // }
                     if ((this -> endpoints).contains(std::make_pair(mess.getMethod(), mess.getURI()))){
                         std::cout << HTTP_Method_Strings.at(reqMethod) << " Endpoint exists" << std::endl;
-                        nlohmann::json retJSON = (this -> endpoints)[std::make_pair(mess.getMethod(), mess.getURI())]();
+                        nlohmann::json retJSON = (this -> endpoints)[std::make_pair(mess.getMethod(), mess.getURI())](mess.getQueryParameters());
                         resp.setStatusCode(HTTP_RESPONSE_CODES::HTTP_STATUS_OK);
                         resp.setBody(retJSON);
                         std::string respStr = resp.toString();

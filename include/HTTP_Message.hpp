@@ -42,6 +42,8 @@ namespace lightHTTPServer {
 
             int getMethod();
 
+            nlohmann::json getQueryParameters();
+
             std::string getStartLine();
 
             std::string getURI();
@@ -67,11 +69,12 @@ namespace lightHTTPServer {
             std::string toString();
         private:
             int bodyLength = 0;
-            int HTTP_Method;
-            std::string HTTP_StartLine;
+            int HTTP_Method = HTTP_Method::GET;
+            std::string HTTP_QueryStr = "";
+            std::string HTTP_StartLine = "";
             std::map<std::string, std::string> HTTP_Headers;
-            char* HTTP_Body;
-            bool read;
+            char* HTTP_Body = nullptr;
+            bool read = false;
     };
 };
 

@@ -58,6 +58,37 @@ namespace lightHTTPServer {
         return this -> HTTP_Method;
     }
 
+    nlohmann::json HTTP_Message::getQueryParameters(){
+        nlohmann::json ret = nlohmann::json::parse("{}");
+        if (this -> HTTP_QueryStr.compare("") != 0 && (this -> getMethod() == HTTP_Method::GET || this -> getMethod() == HTTP_Method::POST)){
+            std::string temp = this -> HTTP_QueryStr;
+            int eqPos = this -> HTTP_QueryStr.find_first_of("=");
+            while (eqPos != std::string::npos){
+                std::string parameterName = temp.substr(0, eqPos);
+                temp.erase(0, eqPos + 1);
+                int ampersandPos = temp.find_first_of("&");
+                std::string parameterValue = temp.substr(0, ampersandPos);
+                temp.erase(0, ampersandPos == std::string::npos ? std::string::npos : ampersandPos + 1);
+                ret[parameterName] = parameterValue;
+                eqPos = temp.find_first_of("=");
+            }
+        } else if (this -> getMethod() == HTTP_Method::POST){
+            if (this -> getBody() != nullptr){
+                if (this -> getHeader("Content-Type").compare("application/x-www-form-urlencoded") == 0){
+                    this -> HTTP_QueryStr = this -> getBody();
+                    return this -> getQueryParameters();
+                } else if (this -> getHeader("Content-Type").compare("multipart/form-data") == 0){
+                    // TODO: Actually handle this
+                } else if (this -> getHeader("Content-Type").compare("application/json") == 0){
+                    return nlohmann::json::parse(this -> getBody());
+                } else {
+                    // TODO: What am I supposed to do here? Cry?
+                }
+            }
+        }
+        return ret;
+    }
+
     std::string HTTP_Message::getStartLine(){
         return this -> HTTP_StartLine;
     }
@@ -76,6 +107,13 @@ namespace lightHTTPServer {
         }
         unsigned int length = 0;
         this -> HTTP_StartLine = bufferStr.substr(0, bufferStr.find_first_of("\r\n") + 2);
+        int qStringPos = this -> HTTP_StartLine.find_first_of("?");
+        if (qStringPos != std::string::npos){
+            this -> HTTP_QueryStr = this -> HTTP_StartLine.substr(qStringPos + 1);
+            int spacePos = this -> HTTP_QueryStr.find_last_of(" ");
+            this -> HTTP_QueryStr = this -> HTTP_QueryStr.substr(0, spacePos);
+            this -> HTTP_StartLine = this -> HTTP_StartLine.substr(0, qStringPos);
+        }
         // std::cout << "HTTP Request Start Line: |" << this -> HTTP_StartLine << "|" << std::endl;
         length += this -> HTTP_StartLine.length();
         std::string method = this -> HTTP_StartLine.substr(0, this -> HTTP_StartLine.find_first_of(" "));

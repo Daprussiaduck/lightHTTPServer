@@ -21,11 +21,12 @@ int main(int argc, char** argv){
     if (!(serv -> setStaticDirectory("../public"))){
         return EXIT_FAILURE;
     }
-    serv -> addEndpoint(lightHTTPServer::HTTP_Method::GET, "/test", []{
+    serv -> addEndpoint(lightHTTPServer::HTTP_Method::GET, "/test", [](nlohmann::json jason){
         std::cerr << "Hello from the endpoint" << std::endl;
+        std::cout << "Quuery parameters from endpoint:" << jason << std::endl;
         return nlohmann::json::parse("{\"test\": 0}");
     });
-    serv -> addEndpoint(lightHTTPServer::HTTP_Method::POST, "/test", []{
+    serv -> addEndpoint(lightHTTPServer::HTTP_Method::POST, "/test", [](nlohmann::json jason){
         std::cerr << "Hello from the endpoint" << std::endl;
         return nlohmann::json::parse("{\"test\": 0}");
     });

@@ -26,7 +26,7 @@ namespace lightHTTPServer {
         public:
             Server(short port = 8888, int numThreads = 1, std::string certFileName = "cert.pem", std::string keyFileName = "key.pem");
             ~Server();
-            void addEndpoint(int method, std::string uri, const std::function<nlohmann::json()> &endpointTask);
+            void addEndpoint(int method, std::string uri, const std::function<nlohmann::json(nlohmann::json)> &endpointTask);
             void runServer();
             bool setStaticDirectory(std::string staticDir);
             void stopServer();
@@ -36,7 +36,7 @@ namespace lightHTTPServer {
             void handleClient(int fd);
 
             const unsigned int BUFFER_LENGTH = 10 * 1024 * 1024;
-            std::map<endpoint, std::function<nlohmann::json()>> endpoints;
+            std::map<endpoint, std::function<nlohmann::json(nlohmann::json)>> endpoints;
             unsigned short listenPort;
             ThreadPool* pool;
             unsigned int numWorkerThreads;
