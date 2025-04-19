@@ -53,11 +53,8 @@ install(EXPORT ${PROJECT_NAME}-Targets
     DESTINATION cmake
 )
 
-# Variable for where the public Headers are located (the include folder)
-set(PUBLIC_HEADERS ${CMAKE_SOURCE_DIR}/include/lightHTTPServer.hpp)
-
 # Actually "install" (copy) the public headers into the proper location
-install(FILES ${PUBLIC_HEADERS} DESTINATION include)
+install(DIRECTORY include/ DESTINATION include/${PROJECT_NAME})
 
 # Add the test imports
 include(CTest)
