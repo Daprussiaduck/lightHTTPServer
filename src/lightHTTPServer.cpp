@@ -151,8 +151,6 @@ namespace lightHTTPServer {
         close(fd);
     }
 
-    // TODO: Figure out why this hangs when server should be stopping
-    // TODO: Use handle client and a branching poll structure?
     void Server::runServer(){
         this -> bindSocket();
         this -> pool = new ThreadPool(this -> numWorkerThreads);

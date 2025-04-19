@@ -13,7 +13,6 @@
 #include "HTTP_MimeTypes.hpp"
 #include "HTTP_Methods.hpp"
 
-// TODO: Query parameters
 namespace lightHTTPServer {
     static const std::string HTTP_VERSION = "HTTP/1.1";
     /**

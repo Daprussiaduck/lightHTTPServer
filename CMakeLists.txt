@@ -1,11 +1,11 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.20)
 
 # Define Project (Name, Version, Description, Languages)
 project(
     lightHTTPServer
     VERSION 1.0.0
     DESCRIPTION
-        "A C++ Library to using nothing but sockets, threading and nlohmann::json to serve webpages"
+        "A C++ Library to using nothing but sockets, threading, and nlohmann::json to serve webpages"
     LANGUAGES CXX
 )
 
@@ -26,7 +26,7 @@ add_library(${PROJECT_NAME} SHARED
     ${SRC_DIR}/ThreadPool.cpp
 )
 
-set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 23)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json OpenSSL::SSL OpenSSL::Crypto)
 

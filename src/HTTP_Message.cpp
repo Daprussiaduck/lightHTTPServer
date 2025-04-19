@@ -77,8 +77,24 @@ namespace lightHTTPServer {
                 if (this -> getHeader("Content-Type").compare("application/x-www-form-urlencoded") == 0){
                     this -> HTTP_QueryStr = this -> getBody();
                     return this -> getQueryParameters();
-                } else if (this -> getHeader("Content-Type").compare("multipart/form-data") == 0){
+                } else if (this -> getHeader("Content-Type").contains("multipart/form-data")){
+                    std::string contentTypeHeader = this -> getHeader("Content-Type");
                     // TODO: Actually handle this
+                    throw std::logic_error("Not yet fully implemented yet.");
+                    // if (this -> getHeader("Content-Type").contains("boundary")){
+                    //     std::string boundaryKey = "--" + contentTypeHeader.substr(contentTypeHeader.find("boundary=") + 10);
+                    //     nlohmann::json ret = nlohmann::json::parse("{}");
+                    //     std::string bodyString = this -> getBody();
+                    //     while (bodyString.find(boundaryKey) != -1){
+                    //         bodyString.erase(0, boundaryKey.length());
+                    //         if (bodyString.length() > 0){
+                    //             std::string ContentDisposition = bodyString.substr(0, bodyString.find_first_of("\r\n\r\n"));
+                    //             bodyString.erase(0, ContentDisposition.length() + 4);
+
+                    //         }
+                    //     }
+                    // } else {
+                    // }
                 } else if (this -> getHeader("Content-Type").compare("application/json") == 0){
                     return nlohmann::json::parse(this -> getBody());
                 } else {
