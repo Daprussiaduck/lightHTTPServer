@@ -54,7 +54,7 @@ install(EXPORT ${PROJECT_NAME}-Targets
 )
 
 # Variable for where the public Headers are located (the include folder)
-set(PUBLIC_HEADERS ${CMAKE_SOURCE_DIR}/include/pokemon-tcg-sdk.hpp)
+set(PUBLIC_HEADERS ${CMAKE_SOURCE_DIR}/include/lightHTTPServer.hpp)
 
 # Actually "install" (copy) the public headers into the proper location
 install(FILES ${PUBLIC_HEADERS} DESTINATION include)
