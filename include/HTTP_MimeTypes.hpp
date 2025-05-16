@@ -7,7 +7,7 @@
 // TODO: Actually check?
 namespace lightHTTPServer {
     /**
-     * Map holding the possible MIME types of a file to send
+     * @brief Map holding the possible MIME types of a file to send
      * 
      * Originally taken from: https://github.com/lasselukkari/MimeTypes/blob/master/MimeTypes.cpp
      * Added .ico filetype (for favicon image) and unkown for defaulting to binary (application/octet-stream)

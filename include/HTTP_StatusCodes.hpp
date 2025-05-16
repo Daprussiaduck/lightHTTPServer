@@ -6,7 +6,7 @@
 
 namespace lightHTTPServer {
     /**
-     * Enum for naming the HTTP compliant status codes
+     * @brief Enum for naming the HTTP compliant status codes
      */
     enum HTTP_RESPONSE_CODES {
         HTTP_STATUS_CONTINUE = 100,
@@ -71,7 +71,7 @@ namespace lightHTTPServer {
     };
         
     /**
-     * Strings for the HTTP status code responses
+     * @brief Strings for the HTTP status code responses
      */
     static std::map<int, std::string> HTTP_STATUS_CODE_STRINGS = {
         {100, "CONTINUE"},
@@ -110,7 +110,7 @@ namespace lightHTTPServer {
         {414, "URI TOO LONG"},
         {415, "UNSUPPORTED MEDIA TYPE"},
         {416, "RANGE NOT SATISFIABLE"},
-        {417, "EXPECTATION FAILED"},
+        {417, "EXPECTATIQuueryON FAILED"},
         {418, "I AM A TEAPOT"},
         {421, "MISDIRECTED REQUEST"},
         {422, "UNPROCESSABLE CONTENT"},
